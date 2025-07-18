@@ -20,13 +20,12 @@ export default class MyPlugin extends Plugin{
         this.app.workspace.on("file-open", async (file) => {
             if(file?.extension === this.ext){
                 var passphrase: string = await this.forceAsyncModal()
-                const raw = await this.app.vault.read(file)
-                    .then(text => Buffer.from(text, 'base64'))
+                const raw = await this.app.vault.readBinary(file)
+                    .then(text => Buffer.from(text))
                     .then(buffer => decryptFile(buffer, passphrase))
-                    .then(decryptedBuf => decryptedBuf.toString('base64'))
                 
                 const filename = file.path.slice(0, -(this.ext.length + 1)) 
-                this.app.vault.create(filename, raw)
+                this.app.vault.createBinary(filename, raw)
                 this.app.vault.delete(file)
                 
 
@@ -52,13 +51,12 @@ export default class MyPlugin extends Plugin{
                         }
                         try{
                         var passphrase = await this.forceAsyncModal()
-                        const raw = await this.app.vault.read(file)
-                            .then(text => Buffer.from(text, 'base64'))
+                        const raw = await this.app.vault.readBinary(file)
+                            .then(text => Buffer.from(text))
                             .then(buffer => encryptFile(buffer, passphrase))
-                            .then(encryptedBuf => encryptedBuf.toString('base64'))
                         const filename = file.path + "." + this.ext
                         this.app.vault.delete(file)
-                        this.app.vault.create(filename, raw)   
+                        this.app.vault.createBinary(filename, raw)   
                         }catch(e){
                             console.log(e)
                         }

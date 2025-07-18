@@ -13,9 +13,12 @@ export class PromptModal extends Modal {
         const {contentEl} = this;
         contentEl.createEl("h3",{text:this.message});
         const input = contentEl.createEl("input",{type:"text"});
-        input.addEventListener("keydown", e=>{
-            if (e.key==="Enter") { this.onSubmit(input.value); this.close(); }
-        });
+        const button = contentEl.createEl("button", { text: "Click me" });
+		button.addEventListener("click", () => {
+			this.onSubmit(input.value);
+			this.close();
+		});
+
         input.focus();
     }
 

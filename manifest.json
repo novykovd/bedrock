@@ -1,0 +1,9 @@
+{
+  "id": "your-plugin-id",
+  "name": "bedrock",
+  "version": "0.0.1",
+  "author": "D",
+  "description": "Encrypt files like a baller",
+  "main": "main.js",
+  "minAppVersion": "0.15.0"
+}
